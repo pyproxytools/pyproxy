@@ -22,16 +22,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install --no-cache-dir -U pip black flake8 bandit
+        run: pip install --no-cache-dir -U pip ruff
 
-      - name: Lint with flake8
-        run: flake8 pyproxy tests benchmark
+      - name: Lint and security check with Ruff
+        run: ruff check pyproxy tests benchmark
 
-      - name: Check with black
-        run: black --check pyproxy tests benchmark
-
-      - name: Check with bandit
-        run: bandit -r pyproxy tests benchmark
+      - name: Check code formatting with Ruff
+        run: ruff format --check pyproxy tests benchmark
 
   unittest:
     needs: code-scan

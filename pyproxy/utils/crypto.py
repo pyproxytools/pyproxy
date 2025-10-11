@@ -38,9 +38,7 @@ def generate_certificate(domain, certs_folder, ca_cert, ca_key):
         cert.set_issuer(ca_cert.get_subject())
         cert.set_pubkey(key)
         san = f"DNS:{domain}"
-        cert.add_extensions(
-            [crypto.X509Extension(b"subjectAltName", False, san.encode())]
-        )
+        cert.add_extensions([crypto.X509Extension(b"subjectAltName", False, san.encode())])
 
         cert.sign(ca_key, "sha256")
 

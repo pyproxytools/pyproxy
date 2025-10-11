@@ -47,12 +47,12 @@ def generate_combined_table(all_results: dict) -> str:
         table_html += f"""
             <tr>
                 <td>{url}</td>
-                <td>{stats['avg_without_proxy']:.5f}</td>
-                <td>{stats['min_without_proxy']:.5f}</td>
-                <td>{stats['max_without_proxy']:.5f}</td>
-                <td>{stats['avg_with_proxy']:.5f}</td>
-                <td>{stats['min_with_proxy']:.5f}</td>
-                <td>{stats['max_with_proxy']:.5f}</td>
+                <td>{stats["avg_without_proxy"]:.5f}</td>
+                <td>{stats["min_without_proxy"]:.5f}</td>
+                <td>{stats["max_without_proxy"]:.5f}</td>
+                <td>{stats["avg_with_proxy"]:.5f}</td>
+                <td>{stats["min_with_proxy"]:.5f}</td>
+                <td>{stats["max_with_proxy"]:.5f}</td>
             </tr>
         """
 

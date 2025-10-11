@@ -20,9 +20,7 @@ class SafeFormatter(logging.Formatter):
                     else:
                         val = getattr(record, var)
                         if isinstance(val, str):
-                            setattr(
-                                record, var, val.replace("\n", "").replace("\r", "")
-                            )
+                            setattr(record, var, val.replace("\n", "").replace("\r", ""))
         return super().format(record)
 
 

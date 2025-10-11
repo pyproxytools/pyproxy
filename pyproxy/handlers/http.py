@@ -62,9 +62,7 @@ class HttpHandler:
             new_headers = self.custom_header_result_queue.get(timeout=5)
             headers.update(new_headers)
         except Exception:
-            self.console_logger.warning(
-                "Timeout while getting custom headers for %s", url
-            )
+            self.console_logger.warning("Timeout while getting custom headers for %s", url)
         return headers
 
     def _rebuild_http_request(self, request_line, headers, body=""):
@@ -86,9 +84,7 @@ class HttpHandler:
             try:
                 return self.shortcuts_result_queue.get(timeout=5)
             except Exception:
-                self.console_logger.warning(
-                    "Timeout while getting shortcut for %s", url
-                )
+                self.console_logger.warning("Timeout while getting shortcut for %s", url)
         return None
 
     def _is_blocked(self, url: str) -> bool:
@@ -150,10 +146,7 @@ class HttpHandler:
             shortcut_url = self._apply_shortcut(url)
             if shortcut_url:
                 response = (
-                    f"HTTP/1.1 302 Found\r\n"
-                    f"Location: {shortcut_url}\r\n"
-                    f"Content-Length: 0\r\n"
-                    "\r\n"
+                    f"HTTP/1.1 302 Found\r\nLocation: {shortcut_url}\r\nContent-Length: 0\r\n\r\n"
                 )
 
                 client_socket.sendall(response.encode())
@@ -170,16 +163,10 @@ class HttpHandler:
             request_lines = request_text.split("\r\n")
             headers = self._get_modified_headers(url, request_text)
             request_line = request_lines[0]
-            body = (
-                request_text.split("\r\n\r\n", 1)[1]
-                if "\r\n\r\n" in request_text
-                else ""
-            )
+            body = request_text.split("\r\n\r\n", 1)[1] if "\r\n\r\n" in request_text else ""
             modified_request = self._rebuild_http_request(request_line, headers, body)
 
-            self.forward_request_to_server(
-                client_socket, modified_request, url, first_line
-            )
+            self.forward_request_to_server(client_socket, modified_request, url, first_line)
 
         else:
             self.forward_request_to_server(client_socket, request, url, first_line)
@@ -199,9 +186,7 @@ class HttpHandler:
         else:
             parsed_url = urlparse(url)
             server_host = parsed_url.hostname
-            server_port = parsed_url.port or (
-                443 if parsed_url.scheme == "https" else 80
-            )
+            server_port = parsed_url.port or (443 if parsed_url.scheme == "https" else 80)
 
         try:
             ip_address = socket.gethostbyname(server_host)
@@ -233,17 +218,13 @@ class HttpHandler:
                     response = server_socket.recv(4096)
                     if response:
                         client_socket.send(response)
-                        self.active_connections[thread_id]["bytes_received"] += len(
-                            response
-                        )
+                        self.active_connections[thread_id]["bytes_received"] += len(response)
                     else:
                         break
                 except socket.timeout:
                     break
         except (socket.timeout, socket.gaierror, ConnectionRefusedError, OSError) as e:
-            self.console_logger.error(
-                "Error connecting to the server %s : %s", server_host, e
-            )
+            self.console_logger.error("Error connecting to the server %s : %s", server_host, e)
             response = (
                 f"HTTP/1.1 502 Bad Gateway\r\n"
                 f"Content-Length: {len('Bad Gateway')} \r\n"

@@ -18,9 +18,7 @@ from urllib.parse import urlparse
 import requests
 
 
-def load_blacklist(
-    blocked_sites_path: str, blocked_url_path: str, filter_mode: str
-) -> set:
+def load_blacklist(blocked_sites_path: str, blocked_url_path: str, filter_mode: str) -> set:
     """
     Loads blocked FQDNs or URLs from a file or URL into a set for fast lookup.
 
@@ -50,9 +48,7 @@ def load_blacklist(
             for line in response.text.splitlines():
                 data.add(line.strip())
         except requests.exceptions.RequestException as e:
-            raise requests.exceptions.RequestException(
-                f"Failed to load data from {url}: {e}"
-            )
+            raise requests.exceptions.RequestException(f"Failed to load data from {url}: {e}")
         return data
 
     if filter_mode == "local":
@@ -88,12 +84,8 @@ def filter_process(
     manager = multiprocessing.Manager()
     blocked_data = manager.dict(
         {
-            "sites": load_blacklist(blocked_sites_path, blocked_url_path, filter_mode)[
-                0
-            ],
-            "urls": load_blacklist(blocked_sites_path, blocked_url_path, filter_mode)[
-                1
-            ],
+            "sites": load_blacklist(blocked_sites_path, blocked_url_path, filter_mode)[0],
+            "urls": load_blacklist(blocked_sites_path, blocked_url_path, filter_mode)[1],
         }
     )
 
@@ -136,13 +128,10 @@ def filter_process(
                 full_url = server_host
 
             if "*" in blocked_data["sites"] or any(
-                server_host.startswith(blocked_host)
-                for blocked_host in blocked_data["sites"]
+                server_host.startswith(blocked_host) for blocked_host in blocked_data["sites"]
             ):
                 result_queue.put((server_host, "Blocked"))
-            elif any(
-                full_url.startswith(blocked_url) for blocked_url in blocked_data["urls"]
-            ):
+            elif any(full_url.startswith(blocked_url) for blocked_url in blocked_data["urls"]):
                 result_queue.put((full_url, "Blocked"))
             else:
                 result_queue.put((server_host, "Allowed"))

@@ -141,11 +141,7 @@ class ProxyServer:
             self.filter_proc.start()
             self.console_logger.debug("[*] Starting the filter process...")
 
-        if (
-            not __slim__
-            and self.config_shortcuts
-            and os.path.isfile(self.config_shortcuts)
-        ):
+        if not __slim__ and self.config_shortcuts and os.path.isfile(self.config_shortcuts):
             self.shortcuts_proc = multiprocessing.Process(
                 target=shortcuts_process,
                 args=(
@@ -157,9 +153,7 @@ class ProxyServer:
             self.shortcuts_proc.start()
             self.console_logger.debug("[*] Starting the shortcuts process...")
 
-        if self.ssl_config.cancel_inspect and os.path.isfile(
-            self.ssl_config.cancel_inspect
-        ):
+        if self.ssl_config.cancel_inspect and os.path.isfile(self.ssl_config.cancel_inspect):
             self.cancel_inspect_proc = multiprocessing.Process(
                 target=cancel_inspect_process,
                 args=(
@@ -171,11 +165,7 @@ class ProxyServer:
             self.cancel_inspect_proc.start()
             self.console_logger.debug("[*] Starting the cancel inspection process...")
 
-        if (
-            not __slim__
-            and self.config_custom_header
-            and os.path.isfile(self.config_custom_header)
-        ):
+        if not __slim__ and self.config_custom_header and os.path.isfile(self.config_custom_header):
             self.custom_header_proc = multiprocessing.Process(
                 target=custom_header_process,
                 args=(
@@ -209,16 +199,12 @@ class ProxyServer:
             with open(self.authorized_ips, "r", encoding="utf-8") as f:
                 lines = [line.strip() for line in f if line.strip()]
             try:
-                self.allowed_subnets = [
-                    ipaddress.ip_network(line, strict=False) for line in lines
-                ]
+                self.allowed_subnets = [ipaddress.ip_network(line, strict=False) for line in lines]
                 self.console_logger.debug(
                     "[*] Loaded %d authorized IPs/subnets", len(self.allowed_subnets)
                 )
             except ValueError as e:
-                self.console_logger.error(
-                    "[*] Invalid IP/subnet in %s: %s", self.authorized_ips, e
-                )
+                self.console_logger.error("[*] Invalid IP/subnet in %s: %s", self.authorized_ips, e)
                 self.allowed_subnets = None
 
     def _validate_ssl_inspection_files(self):
@@ -308,9 +294,7 @@ class ProxyServer:
                 if self.allowed_subnets:
                     ip_obj = ipaddress.ip_address(client_ip)
                     if not any(ip_obj in net for net in self.allowed_subnets):
-                        self.console_logger.debug(
-                            "Unauthorized IP blocked: %s", client_ip
-                        )
+                        self.console_logger.debug("Unauthorized IP blocked: %s", client_ip)
                         with open(self.html_403, "r", encoding="utf-8") as f:
                             custom_403_page = f.read()
                         response = (
@@ -323,9 +307,7 @@ class ProxyServer:
                         try:
                             client_socket.sendall(response.encode("utf-8"))
                         except Exception as e:
-                            self.console_logger.error(
-                                "Error sending 403 response: %s", e
-                            )
+                            self.console_logger.error("Error sending 403 response: %s", e)
                         finally:
                             client_socket.close()
                         continue

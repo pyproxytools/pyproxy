@@ -40,12 +40,8 @@ def parse_args() -> argparse.Namespace:
     )  # noqa: E501
     parser.add_argument("--access-log", type=str, help="Path to the access log file")
     parser.add_argument("--block-log", type=str, help="Path to the block log file")
-    parser.add_argument(
-        "--html-403", type=str, help="Path to the custom 403 Forbidden HTML page"
-    )
-    parser.add_argument(
-        "--no-filter", action="store_true", help="Disable URL and domain filtering"
-    )
+    parser.add_argument("--html-403", type=str, help="Path to the custom 403 Forbidden HTML page")
+    parser.add_argument("--no-filter", action="store_true", help="Disable URL and domain filtering")
     parser.add_argument(
         "--filter-mode", type=str, choices=["local", "http"], help="Filter list mode"
     )  # noqa: E501
@@ -74,18 +70,10 @@ def parse_args() -> argparse.Namespace:
         type=str,
         help="Path to the txt file containing the list of authorized ips",
     )  # noqa: E501
-    parser.add_argument(
-        "--no-logging-access", action="store_true", help="Disable access logging"
-    )
-    parser.add_argument(
-        "--no-logging-block", action="store_true", help="Disable block logging"
-    )
-    parser.add_argument(
-        "--ssl-inspect", action="store_true", help="Enable SSL inspection"
-    )
-    parser.add_argument(
-        "--inspect-ca-cert", type=str, help="Path to the CA certificate"
-    )
+    parser.add_argument("--no-logging-access", action="store_true", help="Disable access logging")
+    parser.add_argument("--no-logging-block", action="store_true", help="Disable block logging")
+    parser.add_argument("--ssl-inspect", action="store_true", help="Enable SSL inspection")
+    parser.add_argument("--inspect-ca-cert", type=str, help="Path to the CA certificate")
     parser.add_argument("--inspect-ca-key", type=str, help="Path to the CA key")
     parser.add_argument(
         "--inspect-certs-folder",
@@ -97,19 +85,11 @@ def parse_args() -> argparse.Namespace:
         type=str,
         help="Path to the text file containing the list of URLs without ssl inspection",
     )  # noqa: E501
-    parser.add_argument(
-        "--flask-port", type=int, help="Port to listen on for monitoring interface"
-    )
-    parser.add_argument(
-        "--flask-pass", type=int, help="Default password to Flask interface"
-    )
-    parser.add_argument(
-        "--proxy-enable", action="store_true", help="Enable proxy after PyProxy"
-    )
+    parser.add_argument("--flask-port", type=int, help="Port to listen on for monitoring interface")
+    parser.add_argument("--flask-pass", type=int, help="Default password to Flask interface")
+    parser.add_argument("--proxy-enable", action="store_true", help="Enable proxy after PyProxy")
     parser.add_argument("--proxy-host", type=str, help="Proxy IP to use after PyProxy")
-    parser.add_argument(
-        "--proxy-port", type=int, help="Proxy Port to use after PyProxy"
-    )
+    parser.add_argument("--proxy-port", type=int, help="Proxy Port to use after PyProxy")
 
     return parser.parse_args()
 

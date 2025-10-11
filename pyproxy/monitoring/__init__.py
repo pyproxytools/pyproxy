@@ -35,4 +35,4 @@ def start_flask_server(proxy_server, flask_port, flask_pass, debug) -> None:
         log.setLevel(logging.ERROR)
 
     register_routes(app, auth, proxy_server, ProxyMonitor)
-    app.run(host="0.0.0.0", port=flask_port)  # nosec
+    app.run(host="0.0.0.0", port=flask_port)  # noqa: S104

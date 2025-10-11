@@ -68,18 +68,12 @@ def register_routes(app, auth, proxy_server, ProxyMonitor):
             "debug": proxy_server.debug,
             "html_403": proxy_server.html_403,
             "logger_config": (
-                proxy_server.logger_config.to_dict()
-                if proxy_server.logger_config
-                else None
+                proxy_server.logger_config.to_dict() if proxy_server.logger_config else None
             ),
             "filter_config": (
-                proxy_server.filter_config.to_dict()
-                if proxy_server.filter_config
-                else None
+                proxy_server.filter_config.to_dict() if proxy_server.filter_config else None
             ),
-            "ssl_config": (
-                proxy_server.ssl_config.to_dict() if proxy_server.ssl_config else None
-            ),
+            "ssl_config": (proxy_server.ssl_config.to_dict() if proxy_server.ssl_config else None),
             "flask_port": proxy_server.monitoring_config.flask_port,
         }
         return jsonify(config_data)
@@ -126,13 +120,9 @@ def register_routes(app, auth, proxy_server, ProxyMonitor):
             blocked_sites_content = ""
             blocked_url_content = ""
 
-            with open(
-                proxy_server.filter_config.blocked_sites, "r", encoding="utf-8"
-            ) as f:
+            with open(proxy_server.filter_config.blocked_sites, "r", encoding="utf-8") as f:
                 blocked_sites_content = [line.strip() for line in f if line.strip()]
-            with open(
-                proxy_server.filter_config.blocked_url, "r", encoding="utf-8"
-            ) as f:
+            with open(proxy_server.filter_config.blocked_url, "r", encoding="utf-8") as f:
                 blocked_url_content = [line.strip() for line in f if line.strip()]
 
             blocked_data = {
@@ -202,9 +192,7 @@ def register_routes(app, auth, proxy_server, ProxyMonitor):
                         f.write(line + "\n")
 
                 return (
-                    jsonify(
-                        {"message": f"{block_type} '{value}' removed successfully"}
-                    ),
+                    jsonify({"message": f"{block_type} '{value}' removed successfully"}),
                     200,
                 )
             except Exception as e:

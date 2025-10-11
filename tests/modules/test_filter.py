@@ -81,9 +81,7 @@ class TestFilter(unittest.TestCase):
     @patch("builtins.open", new_callable=mock_open, read_data="")
     def test_load_blacklist_empty_file(self, _mock_file):
         """Tests that an empty file returns empty sets for blocked sites and URLs."""
-        blocked_sites, blocked_urls = load_blacklist(
-            "empty_sites.txt", "empty_urls.txt", "local"
-        )
+        blocked_sites, blocked_urls = load_blacklist("empty_sites.txt", "empty_urls.txt", "local")
         self.assertEqual(len(blocked_sites), 0)
         self.assertEqual(len(blocked_urls), 0)
 
@@ -156,9 +154,7 @@ class TestFilter(unittest.TestCase):
         """
         input_urls = ["http://sub.blocked.com/"]
         expected_results = [("sub.blocked.com", "Allowed")]
-        self._test_filter_process_helper(
-            input_urls, expected_results, patch_data="blocked.com\n"
-        )
+        self._test_filter_process_helper(input_urls, expected_results, patch_data="blocked.com\n")
 
     def test_filter_process_special_characters(self):
         """Tests if URLs with special characters are correctly handled."""

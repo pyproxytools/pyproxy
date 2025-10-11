@@ -19,9 +19,9 @@ Whether you're fixing bugs, writing tests, or improving documentation, all contr
 ## ✅ Development Guidelines
 
 - Follow [PEP8](https://peps.python.org/pep-0008/) coding style.
-- We use **flake8** to ensure code quality:
+- We use **Ruff** to ensure code quality:
   ```bash
-  flake8 pyproxy tests benchmark
+  ruff check
   ```
 - Tests are written using **unittest**. To run all tests:
   ```bash

@@ -271,12 +271,8 @@ class HttpsHandler:
 
                 tls_version = ssl_client_socket.version() or "unknown"
 
-                server_socket = self._establish_server_connection(
-                    server_host, server_port
-                )
-                ssl_server_socket = self._wrap_server_socket_with_ssl(
-                    server_socket, server_host
-                )
+                server_socket = self._establish_server_connection(server_host, server_port)
+                ssl_server_socket = self._wrap_server_socket_with_ssl(server_socket, server_host)
 
                 first_request, full_url, is_blocked = self._process_first_ssl_request(
                     ssl_client_socket, server_host, first_line
@@ -324,9 +320,7 @@ class HttpsHandler:
 
         else:
             try:
-                server_socket = self._establish_server_connection(
-                    server_host, server_port
-                )
+                server_socket = self._establish_server_connection(server_host, server_port)
                 client_socket.sendall(b"HTTP/1.1 200 Connection Established\r\n\r\n")
 
                 client_ip = client_socket.getpeername()[0]
@@ -355,9 +349,7 @@ class HttpsHandler:
                 ConnectionRefusedError,
                 OSError,
             ) as e:
-                self.console_logger.error(
-                    "Error connecting to the server %s: %s", server_host, e
-                )
+                self.console_logger.error("Error connecting to the server %s: %s", server_host, e)
                 response = (
                     f"HTTP/1.1 502 Bad Gateway\r\n"
                     f"Content-Length: {len('Bad Gateway')} \r\n"
@@ -401,9 +393,7 @@ class HttpsHandler:
                         client_socket.close()
                         server_socket.close()
                         bytes_sent = self.active_connections[thread_id]["bytes_sent"]
-                        bytes_received = self.active_connections[thread_id][
-                            "bytes_received"
-                        ]
+                        bytes_received = self.active_connections[thread_id]["bytes_received"]
                         self.active_connections.pop(threading.get_ident(), None)
                         return bytes_sent, bytes_received
                     if sock is client_socket:
@@ -411,9 +401,7 @@ class HttpsHandler:
                         self.active_connections[thread_id]["bytes_sent"] += len(data)
                     else:
                         client_socket.sendall(data)
-                        self.active_connections[thread_id]["bytes_received"] += len(
-                            data
-                        )
+                        self.active_connections[thread_id]["bytes_received"] += len(data)
         except (socket.error, OSError):
             client_socket.close()
             server_socket.close()
