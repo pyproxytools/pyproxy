@@ -2,10 +2,6 @@ name: cicd
 
 on: 
   push:
-    branches:
-      - main
-    tags:
-      - "*"
   pull_request:
 
 jobs:
@@ -59,7 +55,7 @@ jobs:
 
   build-docker:
     needs: unittest
-    if: github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -99,7 +95,7 @@ jobs:
 
   build-packages:
     needs: unittest
-    if: github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
