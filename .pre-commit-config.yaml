@@ -5,10 +5,12 @@ repos:
       - id: black
         language_version: python3.13
 
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.3.0
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.14.0
     hooks:
-      - id: flake8
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
 
   - repo: https://github.com/PyCQA/bandit
     rev: 1.8.6

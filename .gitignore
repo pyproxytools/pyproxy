@@ -180,3 +180,4 @@ certs/*.pem
 certs/ca/*.pem
 
 .vscode
+.ruff_cache

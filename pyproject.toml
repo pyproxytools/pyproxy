@@ -35,6 +35,26 @@ find = {}
 [tool.setuptools.dynamic]
 dependencies = { file = "requirements.txt" }
 
+[tool.ruff]
+line-length = 100
+src = ["pyproxy", "tests", "benchmark"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    "venv",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = false
+
 [project.scripts]
 pyproxy = "pyproxy.pyproxy:main"
 
