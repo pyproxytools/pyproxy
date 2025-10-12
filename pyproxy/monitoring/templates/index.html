@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ get_locale() }}">
 <head>
     <meta charset="UTF-8" />
     <title>PyProxy Monitoring</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png" />
+    <script>
+        const I18N = {{ translations | tojson | safe }};
+    </script>
     <script src="{{ url_for('static', filename='monitoring.js') }}" defer></script>
 </head>
 <body>
@@ -13,53 +16,53 @@
             <img src="{{ url_for('static', filename='favicon.png') }}" alt="icon" class="favicon" />
             PyProxy Monitoring
         </h1>
-        <p><strong>Next refresh in:</strong> <span id="refresh-timer">--:--</span></p>
+        <p><strong>{{ _("Next refresh in:") }}</strong> <span id="refresh-timer">--:--</span></p>
 
         <!-- Tabs -->
         <div class="tabs" role="tablist" aria-label="Monitoring Sections">
-            <div class="tab active" role="tab" aria-selected="true" tabindex="0" id="tab-status" aria-controls="content-status">Status</div>
-            <div class="tab" role="tab" aria-selected="false" tabindex="-1" id="tab-settings" aria-controls="content-settings">Settings</div>
-            <div class="tab" role="tab" aria-selected="false" tabindex="-1" id="tab-connections" aria-controls="content-connections">Connections</div>
-            <div class="tab" role="tab" aria-selected="false" tabindex="-1" id="tab-filtering" aria-controls="content-filtering">Filtering</div>
+            <div class="tab active" role="tab" aria-selected="true" tabindex="0" id="tab-status" aria-controls="content-status">{{ _("Status") }}</div>
+            <div class="tab" role="tab" aria-selected="false" tabindex="-1" id="tab-settings" aria-controls="content-settings">{{ _("Settings") }}</div>
+            <div class="tab" role="tab" aria-selected="false" tabindex="-1" id="tab-connections" aria-controls="content-connections">{{ _("Connections") }}</div>
+            <div class="tab" role="tab" aria-selected="false" tabindex="-1" id="tab-filtering" aria-controls="content-filtering">{{ _("Filtering") }}</div>
         </div>
 
         <!-- Tab Contents -->
         <div id="content-status" class="tab-content active" role="tabpanel" aria-labelledby="tab-status">
-            <div id="status-section" class="section">Loading...</div>
+            <div id="status-section" class="section">{{ _("Loading...") }}</div>
             <div id="subprocesses-section" class="section"></div>
         </div>
 
         <div id="content-settings" class="tab-content" role="tabpanel" aria-labelledby="tab-settings">
-            <div id="config-section" class="section">Loading...</div>
+            <div id="config-section" class="section">{{ _("Loading...") }}</div>
         </div>
 
         <div id="content-connections" class="tab-content" role="tabpanel" aria-labelledby="tab-connections">
             <div id="connections-section">
-                <h2>Active Connections</h2>
-                <input type="text" id="connection-search" placeholder="Search client or target..." style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+                <h2>{{ _("Active Connections") }}</h2>
+                <input type="text" id="connection-search" placeholder="{{ _('Search client or target...') }}" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
                 <div id="connections-table-container"></div>
             </div>
         </div>
 
         <div id="content-filtering" class="tab-content" role="tabpanel" aria-labelledby="tab-filtering" hidden>
             <div id="blocked-section">
-                <h2>Filtering</h2>
+                <h2>{{ _("Filtering") }}</h2>
                 <div id="filtering-form-section" style="margin-bottom: 20px;">
-                <h3>Add a domain or URL to block</h3>
+                <h3>{{ _("Add a domain or URL to block") }}</h3>
                 <form id="add-block-form">
                     <label for="block-type">Type :</label>
                     <select id="block-type" name="block-type">
-                    <option value="domain">Domain</option>
-                    <option value="url">URL</option>
+                    <option value="domain">{{ _("Domain") }}</option>
+                    <option value="url">{{ _("URL") }}</option>
                     </select>
                     
-                    <label for="block-value" style="margin-left: 10px;">Value :</label>
-                    <input type="text" id="block-value" name="block-value" required placeholder="e.g.: example.com or http://example.com/page">
+                    <label for="block-value" style="margin-left: 10px;">{{ _("Value :") }}</label>
+                    <input type="text" id="block-value" name="block-value" required placeholder="{{ _('e.g.: example.com or http://example.com/page') }}">
 
-                    <button type="submit" style="margin-left: 10px;">Add</button>
+                    <button type="submit" style="margin-left: 10px;">{{ _("Add") }}</button>
                 </form>
                 </div>
-                <input type="text" id="blocked-search" placeholder="Search domain or URLs..." style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+                <input type="text" id="blocked-search" placeholder="{{ _('Search domain or URLs...') }}" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
                 <div id="blocked-section-container"></div>
             </div>
         </div>

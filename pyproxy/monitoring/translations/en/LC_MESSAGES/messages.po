@@ -1,0 +1,248 @@
+# English translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-10-12 16:04+0200\n"
+"PO-Revision-Date: 2025-10-12 15:16+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: routes.py:34 templates/index.html:19
+msgid "Next refresh in:"
+msgstr ""
+
+#: routes.py:35 templates/index.html:31 templates/index.html:36
+msgid "Loading..."
+msgstr ""
+
+#: routes.py:36
+msgid "Main Process"
+msgstr ""
+
+#: routes.py:37
+msgid "Subprocesses"
+msgstr ""
+
+#: routes.py:38 templates/index.html:23
+msgid "Status"
+msgstr ""
+
+#: routes.py:39
+msgid "Configuration"
+msgstr ""
+
+#: routes.py:40 templates/index.html:41
+msgid "Active Connections"
+msgstr ""
+
+#: routes.py:41 templates/index.html:42
+msgid "Search client or target..."
+msgstr ""
+
+#: routes.py:42
+msgid "Blocked sites"
+msgstr ""
+
+#: routes.py:43
+msgid "Blocked URLs"
+msgstr ""
+
+#: routes.py:44 templates/index.html:62
+msgid "Add"
+msgstr ""
+
+#: routes.py:45 templates/index.html:51
+msgid "Add a domain or URL to block"
+msgstr ""
+
+#: routes.py:46 templates/index.html:55
+msgid "Domain"
+msgstr ""
+
+#: routes.py:47 templates/index.html:56
+msgid "URL"
+msgstr ""
+
+#: routes.py:48 templates/index.html:59
+msgid "Value :"
+msgstr ""
+
+#: routes.py:49 templates/index.html:26 templates/index.html:49
+msgid "Filtering"
+msgstr ""
+
+#: routes.py:50
+msgid "No active connections."
+msgstr ""
+
+#: routes.py:51
+msgid "No blocked sites."
+msgstr ""
+
+#: routes.py:52
+msgid "No URLs blocked."
+msgstr ""
+
+#: routes.py:53
+msgid "Error while deleting :"
+msgstr ""
+
+#: routes.py:54
+msgid "Error adding :"
+msgstr ""
+
+#: routes.py:55
+msgid "Please enter a value to block."
+msgstr ""
+
+#: routes.py:56 routes.py:84
+msgid "Network error"
+msgstr ""
+
+#: routes.py:57
+msgid "Error loading data:"
+msgstr ""
+
+#: routes.py:58
+msgid "Name:"
+msgstr ""
+
+#: routes.py:59
+msgid "PID:"
+msgstr ""
+
+#: routes.py:60
+msgid "Status:"
+msgstr ""
+
+#: routes.py:61
+msgid "Start Time:"
+msgstr ""
+
+#: routes.py:62
+msgid "Client"
+msgstr ""
+
+#: routes.py:63
+msgid "Target"
+msgstr ""
+
+#: routes.py:64
+msgid "Sent"
+msgstr ""
+
+#: routes.py:65
+msgid "Received"
+msgstr ""
+
+#: routes.py:66
+msgid "bytes"
+msgstr ""
+
+#: routes.py:67
+msgid "Port:"
+msgstr ""
+
+#: routes.py:68
+msgid "Flask Port:"
+msgstr ""
+
+#: routes.py:69
+msgid "HTML 403:"
+msgstr ""
+
+#: routes.py:70
+msgid "Filter Configuration"
+msgstr ""
+
+#: routes.py:71
+msgid "Blocked Sites File:"
+msgstr ""
+
+#: routes.py:72
+msgid "Blocked URL File:"
+msgstr ""
+
+#: routes.py:73
+msgid "Filter Mode:"
+msgstr ""
+
+#: routes.py:74
+msgid "Logger Configuration"
+msgstr ""
+
+#: routes.py:75
+msgid "Access Log:"
+msgstr ""
+
+#: routes.py:76
+msgid "Block Log:"
+msgstr ""
+
+#: routes.py:77
+msgid "SSL Inspection"
+msgstr ""
+
+#: routes.py:78
+msgid "Inspect CA Cert:"
+msgstr ""
+
+#: routes.py:79
+msgid "Inspect CA Key:"
+msgstr ""
+
+#: routes.py:80
+msgid "Inspect certs folder:"
+msgstr ""
+
+#: routes.py:81
+msgid "Cancel inspect:"
+msgstr ""
+
+#: routes.py:82
+msgid "Action"
+msgstr ""
+
+#: routes.py:83
+msgid "Unblock"
+msgstr ""
+
+#: templates/index.html:24
+msgid "Settings"
+msgstr ""
+
+#: templates/index.html:25
+msgid "Connections"
+msgstr ""
+
+#: templates/index.html:60
+msgid "e.g.: example.com or http://example.com/page"
+msgstr ""
+
+#: templates/index.html:65
+msgid "Search domain or URLs..."
+msgstr ""
+
+#~ msgid "running"
+#~ msgstr ""
+
+#~ msgid "terminated"
+#~ msgstr ""
+
+#~ msgid "unknown"
+#~ msgstr ""
+
+#~ msgid "not started"
+#~ msgstr ""
+

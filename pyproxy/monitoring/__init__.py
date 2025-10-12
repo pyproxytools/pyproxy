@@ -7,7 +7,8 @@ server using Flask to provide monitoring endpoints.
 """
 
 import logging
-from flask import Flask
+from flask import Flask, request
+from flask_babel import Babel
 from .monitor import ProxyMonitor
 from .auth import create_basic_auth
 from .routes import register_routes
@@ -30,6 +31,24 @@ def start_flask_server(proxy_server, flask_port, flask_pass, debug) -> None:
     auth = create_basic_auth(flask_pass)
 
     app = Flask(__name__, static_folder="static")
+    app.config["BABEL_DEFAULT_LOCALE"] = "en"
+    app.config["BABEL_SUPPORTED_LOCALES"] = ["fr", "en"]
+    app.config["BABEL_DEFAULT_TIMEZONE"] = "Europe/London"
+
+    def select_locale():
+        lang = request.args.get("lang")
+        if lang in app.config["BABEL_SUPPORTED_LOCALES"]:
+            return lang
+        return request.accept_languages.best_match(app.config["BABEL_SUPPORTED_LOCALES"])
+
+    Babel(app, locale_selector=select_locale)
+
+    @app.context_processor
+    def inject_globals():
+        from flask_babel import get_locale
+
+        return {"get_locale": get_locale}
+
     if not debug:
         log = logging.getLogger("werkzeug")
         log.setLevel(logging.ERROR)

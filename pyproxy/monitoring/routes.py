@@ -7,6 +7,7 @@ HTML-based index page.
 """
 
 from flask import jsonify, render_template, request
+from flask_babel import _
 
 
 def register_routes(app, auth, proxy_server, ProxyMonitor):
@@ -29,7 +30,60 @@ def register_routes(app, auth, proxy_server, ProxyMonitor):
         Returns:
             Response: Rendered HTML page.
         """
-        return render_template("index.html")
+        translations = {
+            "Next refresh in:": _("Next refresh in:"),
+            "Loading...": _("Loading..."),
+            "Main Process": _("Main Process"),
+            "Subprocesses": _("Subprocesses"),
+            "Status": _("Status"),
+            "Configuration": _("Configuration"),
+            "Active Connections": _("Active Connections"),
+            "Search client or target...": _("Search client or target..."),
+            "Blocked sites": _("Blocked sites"),
+            "Blocked URLs": _("Blocked URLs"),
+            "Add": _("Add"),
+            "Add a domain or URL to block": _("Add a domain or URL to block"),
+            "Domain": _("Domain"),
+            "URL": _("URL"),
+            "Value :": _("Value :"),
+            "Filtering": _("Filtering"),
+            "No active connections.": _("No active connections."),
+            "No blocked sites.": _("No blocked sites."),
+            "No URLs blocked.": _("No URLs blocked."),
+            "Error while deleting :": _("Error while deleting :"),
+            "Error adding :": _("Error adding :"),
+            "Please enter a value to block.": _("Please enter a value to block."),
+            "Network error": _("Network error"),
+            "Error loading data:": _("Error loading data:"),
+            "Name:": _("Name:"),
+            "PID:": _("PID:"),
+            "Status:": _("Status:"),
+            "Start Time:": _("Start Time:"),
+            "Client": _("Client"),
+            "Target": _("Target"),
+            "Sent": _("Sent"),
+            "Received": _("Received"),
+            "bytes": _("bytes"),
+            "Port:": _("Port:"),
+            "Flask Port:": _("Flask Port:"),
+            "HTML 403:": _("HTML 403:"),
+            "Filter Configuration": _("Filter Configuration"),
+            "Blocked Sites File:": _("Blocked Sites File:"),
+            "Blocked URL File:": _("Blocked URL File:"),
+            "Filter Mode:": _("Filter Mode:"),
+            "Logger Configuration": _("Logger Configuration"),
+            "Access Log:": _("Access Log:"),
+            "Block Log:": _("Block Log:"),
+            "SSL Inspection": _("SSL Inspection"),
+            "Inspect CA Cert:": _("Inspect CA Cert:"),
+            "Inspect CA Key:": _("Inspect CA Key:"),
+            "Inspect certs folder:": _("Inspect certs folder:"),
+            "Cancel inspect:": _("Cancel inspect:"),
+            "Action": _("Action"),
+            "Unblock": _("Unblock"),
+            "Network error:": _("Network error"),
+        }
+        return render_template("index.html", translations=translations)
 
     @app.route("/api/status", methods=["GET"])
     @auth.login_required

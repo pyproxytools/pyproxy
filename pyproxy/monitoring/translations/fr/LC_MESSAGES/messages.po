@@ -1,0 +1,248 @@
+# French translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-10-12 16:04+0200\n"
+"PO-Revision-Date: 2025-10-12 15:16+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: routes.py:34 templates/index.html:19
+msgid "Next refresh in:"
+msgstr "Prochaine actualisation dans:"
+
+#: routes.py:35 templates/index.html:31 templates/index.html:36
+msgid "Loading..."
+msgstr "Chargement..."
+
+#: routes.py:36
+msgid "Main Process"
+msgstr "Processus principal"
+
+#: routes.py:37
+msgid "Subprocesses"
+msgstr "Sous-processus"
+
+#: routes.py:38 templates/index.html:23
+msgid "Status"
+msgstr "Statut"
+
+#: routes.py:39
+msgid "Configuration"
+msgstr "Configuration"
+
+#: routes.py:40 templates/index.html:41
+msgid "Active Connections"
+msgstr "Connexions actives"
+
+#: routes.py:41 templates/index.html:42
+msgid "Search client or target..."
+msgstr "Rechercher un client ou une destination..."
+
+#: routes.py:42
+msgid "Blocked sites"
+msgstr "Sites bloqués"
+
+#: routes.py:43
+msgid "Blocked URLs"
+msgstr "URL bloquées"
+
+#: routes.py:44 templates/index.html:62
+msgid "Add"
+msgstr "Ajouter"
+
+#: routes.py:45 templates/index.html:51
+msgid "Add a domain or URL to block"
+msgstr "Ajouter un domaine ou une URL à bloquer"
+
+#: routes.py:46 templates/index.html:55
+msgid "Domain"
+msgstr "Domaine"
+
+#: routes.py:47 templates/index.html:56
+msgid "URL"
+msgstr "URL"
+
+#: routes.py:48 templates/index.html:59
+msgid "Value :"
+msgstr "Valeur :"
+
+#: routes.py:49 templates/index.html:26 templates/index.html:49
+msgid "Filtering"
+msgstr "Filtrage"
+
+#: routes.py:50
+msgid "No active connections."
+msgstr "Pas de connexions actives"
+
+#: routes.py:51
+msgid "No blocked sites."
+msgstr "Aucun site bloqué"
+
+#: routes.py:52
+msgid "No URLs blocked."
+msgstr "Aucune URL bloquée"
+
+#: routes.py:53
+msgid "Error while deleting :"
+msgstr "Erreur lors de la suppression :"
+
+#: routes.py:54
+msgid "Error adding :"
+msgstr "Erreur lors de l'ajout :"
+
+#: routes.py:55
+msgid "Please enter a value to block."
+msgstr "Entrez une valeur à bloquer"
+
+#: routes.py:56 routes.py:84
+msgid "Network error"
+msgstr "Erreur réseau"
+
+#: routes.py:57
+msgid "Error loading data:"
+msgstr "Erreur lors de l'ajout :"
+
+#: routes.py:58
+msgid "Name:"
+msgstr "Nom:"
+
+#: routes.py:59
+msgid "PID:"
+msgstr "PID:"
+
+#: routes.py:60
+msgid "Status:"
+msgstr "Statut:"
+
+#: routes.py:61
+msgid "Start Time:"
+msgstr "Heure de début:"
+
+#: routes.py:62
+msgid "Client"
+msgstr "Client"
+
+#: routes.py:63
+msgid "Target"
+msgstr "Destination"
+
+#: routes.py:64
+msgid "Sent"
+msgstr "Envoyé"
+
+#: routes.py:65
+msgid "Received"
+msgstr "Reçu"
+
+#: routes.py:66
+msgid "bytes"
+msgstr "octets"
+
+#: routes.py:67
+msgid "Port:"
+msgstr "Port:"
+
+#: routes.py:68
+msgid "Flask Port:"
+msgstr "Flask Port:"
+
+#: routes.py:69
+msgid "HTML 403:"
+msgstr "HTML 403:"
+
+#: routes.py:70
+msgid "Filter Configuration"
+msgstr "Configuration de filtrage"
+
+#: routes.py:71
+msgid "Blocked Sites File:"
+msgstr "Fichier de sites bloqués:"
+
+#: routes.py:72
+msgid "Blocked URL File:"
+msgstr "Fichier d'URL bloquées:"
+
+#: routes.py:73
+msgid "Filter Mode:"
+msgstr "Mode de filtrage:"
+
+#: routes.py:74
+msgid "Logger Configuration"
+msgstr "Configuration de l'enregistrement"
+
+#: routes.py:75
+msgid "Access Log:"
+msgstr "Journal d'accès:"
+
+#: routes.py:76
+msgid "Block Log:"
+msgstr "Journal de blocage:"
+
+#: routes.py:77
+msgid "SSL Inspection"
+msgstr "Inspection SSL"
+
+#: routes.py:78
+msgid "Inspect CA Cert:"
+msgstr "Certificat CA inspection:"
+
+#: routes.py:79
+msgid "Inspect CA Key:"
+msgstr "Clé CA inspection:"
+
+#: routes.py:80
+msgid "Inspect certs folder:"
+msgstr "Dossier des certificats inspection:"
+
+#: routes.py:81
+msgid "Cancel inspect:"
+msgstr "Fichier annulation inspection:"
+
+#: routes.py:82
+msgid "Action"
+msgstr "Action"
+
+#: routes.py:83
+msgid "Unblock"
+msgstr "Débloquer"
+
+#: templates/index.html:24
+msgid "Settings"
+msgstr "Paramètres"
+
+#: templates/index.html:25
+msgid "Connections"
+msgstr "Connexions"
+
+#: templates/index.html:60
+msgid "e.g.: example.com or http://example.com/page"
+msgstr "ex: exemple.com ou http://exemple.com/page"
+
+#: templates/index.html:65
+msgid "Search domain or URLs..."
+msgstr "Rechercher un client ou une destination..."
+
+#~ msgid "running"
+#~ msgstr "démarré"
+
+#~ msgid "terminated"
+#~ msgstr "terminé"
+
+#~ msgid "unknown"
+#~ msgstr "inconnu"
+
+#~ msgid "not started"
+#~ msgstr "pas démarré"
+

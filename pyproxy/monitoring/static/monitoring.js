@@ -13,20 +13,20 @@ async function fetchAllData() {
         const blocked = await blockedRes.json();
 
         document.getElementById('status-section').innerHTML = `
-            <h2>Main Process</h2>
-            <p><strong>Name:</strong> ${monitoring.name}</p>
-            <p><strong>PID:</strong> ${monitoring.pid}</p>
-            <p><strong>Status:</strong> <span class="badge ${monitoring.status}">${monitoring.status}</span></p>
-            <p><strong>Start Time:</strong> ${monitoring.start_time}</p>
+            <h2>${I18N["Main Process"]}</h2>
+            <p><strong>${I18N["Name:"]}</strong> ${monitoring.name}</p>
+            <p><strong>${I18N["PID:"]}</strong> ${monitoring.pid}</p>
+            <p><strong>${I18N["Status:"]}</strong> <span class="badge ${monitoring.status}">${monitoring.status}</span></p>
+            <p><strong>${I18N["Start Time:"]}</strong> ${monitoring.start_time}</p>
         `;
 
         document.getElementById('subprocesses-section').innerHTML = `
-            <h2>Subprocesses</h2>
+            <h2>${I18N["Subprocesses"]}</h2>
             ${Object.values(monitoring.subprocesses).map(proc => `
                 <div class="subprocess">
                     <h3>${proc.name}</h3>
-                    <p><strong>PID:</strong> ${proc.pid}</p>
-                    <p><strong>Status:</strong> <span class="badge ${proc.status}">${proc.status}</span></p>
+                    <p><strong>${I18N["PID:"]}</strong> ${proc.pid}</p>
+                    <p><strong>${I18N["Status:"]}</strong> <span class="badge ${proc.status}">${proc.status}</span></p>
                     <ul>${proc.threads.map(t => `<li>${t.name} (${t.thread_id})</li>`).join('')}</ul>
                 </div>
             `).join('')}
@@ -34,15 +34,15 @@ async function fetchAllData() {
 
         document.getElementById('connections-table-container').innerHTML = `
             ${monitoring.active_connections.length === 0
-                ? '<p>No active connections.</p>'
+                ? `<p>${I18N["No active connections."]}</p>`
                 : `
                 <table class="generic-table">
                     <thead>
                         <tr>
-                            <th>Client</th>
-                            <th>Target</th>
-                            <th>Sent</th>
-                            <th>Received</th>
+                            <th>${I18N["Client"]}</th>
+                            <th>${I18N["Target"]}</th>
+                            <th>${I18N["Sent"]}</th>
+                            <th>${I18N["Received"]}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,7 +50,7 @@ async function fetchAllData() {
                             <tr>
                                 <td>${conn.client_ip}:${conn.client_port}</td>
                                 <td>${conn.target_domain} (${conn.target_ip}:${conn.target_port})</td>
-                                <td>${conn.bytes_sent} bytes</td>
+                                <td>${conn.bytes_sent} ${I18N["bytes"]}</td>
                                 <td>${formatBytes(conn.bytes_received)}</td>
                             </tr>
                         `).join('')}
@@ -60,22 +60,22 @@ async function fetchAllData() {
         `;
 
         document.getElementById('config-section').innerHTML = `
-            <h2>Configuration ${config.debug ? '<span class="badge stopped small">DEBUG</span>' : ''}</h2>
-            <p><strong>Port:</strong> ${config.port ? `<span class="path">${config.port}</span>` : '<span class="checkmark false">✗</span>'}</p>
-            <p><strong>Flask Port:</strong> ${config.flask_port ? `<span class="path">${config.flask_port}</span>` : '<span class="checkmark false">✗</span>'}</p>
-            <p><strong>HTML 403:</strong> ${config.html_403 ? `<span class="path">${config.html_403}</span>` : '<span class="checkmark false">✗</span>'}</p>
-            <h3>Filter Configuration <span class="checkmark ${config.filter_config.no_filter ? 'false' : ''}">${config.filter_config.no_filter ? '✗' : '✓'}</span></h3>
-            <p><strong>Blocked Sites File:</strong> ${config.filter_config.blocked_sites ? `<span class="path">${config.filter_config.blocked_sites}</span>` : '<span class="checkmark false">✗</span>'}</p>
-            <p><strong>Blocked URL File:</strong> ${config.filter_config.blocked_url ? `<span class="path">${config.filter_config.blocked_url}</span>` : '<span class="checkmark false">✗</span>'}</p>
-            <p><strong>Filter Mode:</strong> <span class="path">${config.filter_config.filter_mode}</span></p>
-            <h3>Logger Configuration</h3>
-            <p><strong>Access Log:</strong> ${config.logger_config.no_logging_access ? '<span class="checkmark false">✗</span>' : '<span class="checkmark">✓</span>'} ${config.logger_config.access_log ? `<span class="path">${config.logger_config.access_log}</span>` : '<span class="checkmark false">✗</span>'}</p>
-            <p><strong>Block Log:</strong> ${config.logger_config.no_logging_block ? '<span class="checkmark false">✗</span>' : '<span class="checkmark">✓</span>'} ${config.logger_config.block_log ? `<span class="path">${config.logger_config.block_log}</span>` : '<span class="checkmark false">✗</span>'}</p>
-            <h3>SSL Inspection <span class="checkmark ${config.ssl_config.ssl_inspect ? '' : 'false'}">${config.ssl_config.ssl_inspect ? '✓' : '✗'}</span></h3>
-            <p><strong>Inspect CA Cert:</strong> ${config.ssl_config.inspect_ca_cert ? `<span class="path">${config.ssl_config.inspect_ca_cert}</span>` : '<span class="checkmark false">✗</span>'}</p>
-            <p><strong>Inspect CA Key:</strong> ${config.ssl_config.inspect_ca_key ? `<span class="path">${config.ssl_config.inspect_ca_key}</span>` : '<span class="checkmark false">✗</span>'}</p>
-            <p><strong>Inspect certs folder:</strong> ${config.ssl_config.inspect_certs_folder ? `<span class="path">${config.ssl_config.inspect_certs_folder}</span>` : '<span class="checkmark false">✗</span>'}</p>
-            <p><strong>Cancel inspect:</strong> ${config.ssl_config.cancel_inspect ? `<span class="path">${config.ssl_config.cancel_inspect}</span>` : '<span class="checkmark false">✗</span>'}</p>
+            <h2>${I18N["Configuration"]} ${config.debug ? '<span class="badge stopped small">DEBUG</span>' : ''}</h2>
+            <p><strong>${I18N["Port:"]}</strong> ${config.port ? `<span class="path">${config.port}</span>` : '<span class="checkmark false">✗</span>'}</p>
+            <p><strong>${I18N["Flask Port:"]}</strong> ${config.flask_port ? `<span class="path">${config.flask_port}</span>` : '<span class="checkmark false">✗</span>'}</p>
+            <p><strong>${I18N["HTML 403:"]}</strong> ${config.html_403 ? `<span class="path">${config.html_403}</span>` : '<span class="checkmark false">✗</span>'}</p>
+            <h3>${I18N["Filter Configuration"]} <span class="checkmark ${config.filter_config.no_filter ? 'false' : ''}">${config.filter_config.no_filter ? '✗' : '✓'}</span></h3>
+            <p><strong>${I18N["Blocked Sites File:"]}</strong> ${config.filter_config.blocked_sites ? `<span class="path">${config.filter_config.blocked_sites}</span>` : '<span class="checkmark false">✗</span>'}</p>
+            <p><strong>${I18N["Blocked URL File:"]}</strong> ${config.filter_config.blocked_url ? `<span class="path">${config.filter_config.blocked_url}</span>` : '<span class="checkmark false">✗</span>'}</p>
+            <p><strong>${I18N["Filter Mode:"]}</strong> <span class="path">${config.filter_config.filter_mode}</span></p>
+            <h3>${I18N["Logger Configuration"]}</h3>
+            <p><strong>${I18N["Access Log:"]}</strong> ${config.logger_config.no_logging_access ? '<span class="checkmark false">✗</span>' : '<span class="checkmark">✓</span>'} ${config.logger_config.access_log ? `<span class="path">${config.logger_config.access_log}</span>` : '<span class="checkmark false">✗</span>'}</p>
+            <p><strong>${I18N["Block Log:"]}</strong> ${config.logger_config.no_logging_block ? '<span class="checkmark false">✗</span>' : '<span class="checkmark">✓</span>'} ${config.logger_config.block_log ? `<span class="path">${config.logger_config.block_log}</span>` : '<span class="checkmark false">✗</span>'}</p>
+            <h3>${I18N["SSL Inspection"]} <span class="checkmark ${config.ssl_config.ssl_inspect ? '' : 'false'}">${config.ssl_config.ssl_inspect ? '✓' : '✗'}</span></h3>
+            <p><strong>${I18N["Inspect CA Cert:"]}</strong> ${config.ssl_config.inspect_ca_cert ? `<span class="path">${config.ssl_config.inspect_ca_cert}</span>` : '<span class="checkmark false">✗</span>'}</p>
+            <p><strong>${I18N["Inspect CA Key:"]}</strong> ${config.ssl_config.inspect_ca_key ? `<span class="path">${config.ssl_config.inspect_ca_key}</span>` : '<span class="checkmark false">✗</span>'}</p>
+            <p><strong>${I18N["Inspect certs folder:"]}</strong> ${config.ssl_config.inspect_certs_folder ? `<span class="path">${config.ssl_config.inspect_certs_folder}</span>` : '<span class="checkmark false">✗</span>'}</p>
+            <p><strong>${I18N["Cancel inspect:"]}</strong> ${config.ssl_config.cancel_inspect ? `<span class="path">${config.ssl_config.cancel_inspect}</span>` : '<span class="checkmark false">✗</span>'}</p>
         `;
 
         const searchInput = document.getElementById('connection-search');
@@ -90,15 +90,15 @@ async function fetchAllData() {
         if (blockedSection) {
             blockedSection.innerHTML = `
             <div class="blocked-subsection">
-                <h3>Blocked sites</h3>
+                <h3>${I18N["Blocked sites"]}</h3>
                 ${blockedSites.length === 0
-                ? '<p>No blocked sites.</p>'
+                ? '<p>${I18N["No blocked sites."]}</p>'
                 : `
                 <table class="generic-table filtering-table">
                     <thead>
                     <tr>
-                        <th>Domain</th>
-                        <th>Action</th>
+                        <th>${I18N["Domain"]}</th>
+                        <th>${I18N["Action"]}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -106,7 +106,7 @@ async function fetchAllData() {
                         <tr>
                         <td>${site}</td>
                         <td>
-                            <button onclick="handleUnblock('domain', '${site}')">Unblock</button>
+                            <button onclick="handleUnblock('domain', '${site}')">${I18N["Unblock"]}</button>
                         </td>
                         </tr>
                     `).join('')}
@@ -115,15 +115,15 @@ async function fetchAllData() {
                 `}
             </div>
             <div class="blocked-subsection">
-                <h3>Blocked URLs</h3>
+                <h3>${I18N["Blocked URLs"]}</h3>
                 ${blockedUrls.length === 0
-                ? '<p>No URLs blocked.</p>'
+                ? '<p>${I18N["No URLs blocked."]}</p>'
                 : `
                 <table class="generic-table filtering-table">
                     <thead>
                     <tr>
-                        <th>URL</th>
-                        <th>Action</th>
+                        <th>${I18N["URL"]}</th>
+                        <th>${I18N["Action"]}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -131,7 +131,7 @@ async function fetchAllData() {
                         <tr>
                         <td>${url}</td>
                         <td>
-                            <button onclick="handleUnblock('url', '${url}')">Unblock</button>
+                            <button onclick="handleUnblock('url', '${url}')">${I18N["Unblock"]}</button>
                         </td>
                         </tr>
                     `).join('')}
@@ -148,7 +148,7 @@ async function fetchAllData() {
         }
 
     } catch (err) {
-        console.error('Error loading data:', err);
+        console.error('${I18N["Error loading data:"]}', err);
     }
     countdown = 2;
 }
@@ -173,14 +173,14 @@ function handleUnblock(type, value) {
   })
   .then(response => {
     if (!response.ok) {
-      alert(`Error while deleting : ${value}`);
+      alert(`${I18N["Error while deleting :"]} ${value}`);
     } else {
       fetchAllData();
     }
   })
   .catch(err => {
-    console.error('Fetching error:', err);
-    alert('Network error');
+    console.error('${I18N["Fetching error:"]}', err);
+    alert('${I18N["Network error:"]}');
   });
 }
 
@@ -320,7 +320,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const value = document.getElementById('block-value').value.trim();
 
         if (!value) {
-            alert('Please enter a value to block.');
+            alert('${I18N["Please enter a value to block."]}');
             return;
         }
 
@@ -339,12 +339,12 @@ window.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('block-value').value = '';
                 fetchAllData();
             } else {
-                alert(`Error adding : ${value}`);
+                alert(`${I18N["Error adding :"]} ${value}`);
             }
         })
         .catch(err => {
-            console.error('Network error:', err);
-            alert('Network error');
+            console.error('${I18N["Network error:"]}', err);
+            alert('${I18N["Network error:"]}');
         });
     });
 

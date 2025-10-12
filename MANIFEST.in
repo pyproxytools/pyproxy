@@ -1,0 +1,2 @@
+include pyproxy/monitoring/messages.pot
+recursive-include pyproxy/monitoring/translations *
