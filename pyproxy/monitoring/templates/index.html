@@ -12,6 +12,28 @@
 </head>
 <body>
     <div class="container">
+        <div class="lang-selector">
+            {% set current = get_locale().language %}
+            <div class="lang-current" onclick="toggleLangDropdown()">
+                {% if current == 'fr' %}
+                    <img src="{{ url_for('static', filename='flags/fr.svg') }}" alt="Français">
+                    <span>Français</span>
+                {% else %}
+                    <img src="{{ url_for('static', filename='flags/en.svg') }}" alt="English">
+                    <span>English</span>
+                {% endif %}
+                ▼
+            </div>
+            <div class="lang-dropdown" id="langDropdown">
+                <a href="?lang=en">
+                    <img src="{{ url_for('static', filename='flags/en.svg') }}" alt="English"> English
+                </a>
+                <a href="?lang=fr">
+                    <img src="{{ url_for('static', filename='flags/fr.svg') }}" alt="Français"> Français
+                </a>
+            </div>
+        </div>
+
         <h1>
             <img src="{{ url_for('static', filename='favicon.png') }}" alt="icon" class="favicon" />
             PyProxy Monitoring

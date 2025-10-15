@@ -351,3 +351,16 @@ window.addEventListener('DOMContentLoaded', () => {
     fetchAllData();
     updateCountdown();
 });
+
+function toggleLangDropdown() {
+    const dropdown = document.getElementById("langDropdown");
+    dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+}
+
+document.addEventListener("click", (e) => {
+    const dropdown = document.getElementById("langDropdown");
+    const selector = document.querySelector(".lang-selector");
+    if (!selector.contains(e.target)) {
+        dropdown.style.display = "none";
+    }
+});
