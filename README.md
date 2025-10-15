@@ -105,4 +105,9 @@ If you want to deploy **pyproxy** automatically to remote servers (via source or
 
 👉 Check out the [pyproxy-ansible](https://github.com/pyproxytools/pyproxy-ansible) repository for more details and usage instructions.
 
+## 🧩 **Python SDK for Administration and Monitoring**
+
+A dedicated Python SDK is available to interact programmatically with the **pyproxy** administration and monitoring interface: [**pyproxy-sdk-py**](https://github.com/pyproxytools/pyproxy-sdk-py).
+This SDK provides a simple and consistent API to manage your proxy configuration remotely — allowing you to add or delete domains, manage URLs, create and remove clients, and perform other administrative tasks. It is designed to integrate easily into automation scripts, dashboards, or backend systems that need to control and monitor pyproxy instances.
+
 ---

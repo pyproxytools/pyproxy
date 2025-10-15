@@ -1,3 +1,11 @@
+## [0.5.0] - 2025-10-12
+### Added
+- Translation system : Babel (english + french)
+- Pre-commit-config.yaml
+### Change
+- Update dependencies
+- Change Flake8, Black and Bandit for Ruff
+
 ## [0.4.6] - 2025-06-12
 ### Added
 - Monitoring : Actions connections table
