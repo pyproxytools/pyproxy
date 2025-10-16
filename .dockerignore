@@ -12,8 +12,6 @@ certs/*.pem
 tests/
 config.ini.example
 
-benchmark/
-
 .github
 .bumpversion.cfg
 .gitignore

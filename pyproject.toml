@@ -38,7 +38,7 @@ dependencies = { file = "requirements.txt" }
 
 [tool.ruff]
 line-length = 100
-src = ["pyproxy", "tests", "benchmark"]
+src = ["pyproxy", "tests"]
 exclude = [
     ".git",
     "__pycache__",

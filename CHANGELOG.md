@@ -5,6 +5,7 @@
 ### Change
 - Update dependencies
 - Change Flake8, Black and Bandit for Ruff
+- Move benchmarking tool (https://github.com/pyproxytools/pyproxy-benchmark)
 
 ## [0.4.6] - 2025-06-12
 ### Added
