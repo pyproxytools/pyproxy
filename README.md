@@ -76,7 +76,7 @@ The proxy will be available at: `0.0.0.0:8080`.
 The access log will be available at `./logs/access.log`.
 
 ## 📚 **Documentation**
-If you encounter any problems, or if you want to use the program in a particular way, I advise you to read the [documentation](https://github.com/pyproxytools/pyproxy/wiki).
+If you encounter any problems, or if you want to use the program in a particular way, I advise you to read the [documentation](https://pyproxytools.github.io/pyproxy-docs/).
 
 ## 🔧 **To do**
 
