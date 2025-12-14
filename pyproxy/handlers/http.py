@@ -6,7 +6,6 @@ HTTP client connections. It handles request forwarding, blocking, and custom hea
 """
 
 import socket
-import os
 import threading
 from urllib.parse import urlparse
 
@@ -77,7 +76,7 @@ class HttpHandler:
         """
         Checks if a shortcut is defined for the given domain.
         """
-        if self.config_shortcuts and os.path.isfile(self.config_shortcuts):
+        if self.config_shortcuts:
             parsed_url = urlparse(url)
             domain = parsed_url.hostname
             self.shortcuts_queue.put(domain)
@@ -142,7 +141,7 @@ class HttpHandler:
         first_line = request.decode(errors="ignore").split("\n")[0]
         url = first_line.split(" ")[1]
 
-        if self.config_shortcuts and os.path.isfile(self.config_shortcuts):
+        if self.config_shortcuts:
             shortcut_url = self._apply_shortcut(url)
             if shortcut_url:
                 response = (
@@ -158,7 +157,7 @@ class HttpHandler:
             self._send_403(client_socket, url, first_line)
             return
 
-        if self.config_custom_header and os.path.isfile(self.config_custom_header):
+        if self.config_custom_header:
             request_text = request.decode(errors="ignore")
             request_lines = request_text.split("\r\n")
             headers = self._get_modified_headers(url, request_text)

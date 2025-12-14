@@ -1,8 +1,6 @@
 __pycache__/
 */__pycache__/
 
-config/*.txt
-config/*.json
 logs/*.log
 
 certs/*.key
@@ -10,7 +8,7 @@ certs/*.pem
 !certs/ca/*
 
 tests/
-config.ini.example
+config.yaml.example
 
 .github
 .bumpversion.cfg

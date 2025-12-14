@@ -133,7 +133,6 @@ class ProxyServer:
                 args=(
                     self.filter_queue,
                     self.filter_result_queue,
-                    self.filter_config.filter_mode,
                     self.filter_config.blocked_sites,
                     self.filter_config.blocked_url,
                 ),
@@ -141,7 +140,7 @@ class ProxyServer:
             self.filter_proc.start()
             self.console_logger.debug("[*] Starting the filter process...")
 
-        if not __slim__ and self.config_shortcuts and os.path.isfile(self.config_shortcuts):
+        if not __slim__ and self.config_shortcuts:
             self.shortcuts_proc = multiprocessing.Process(
                 target=shortcuts_process,
                 args=(
@@ -153,7 +152,7 @@ class ProxyServer:
             self.shortcuts_proc.start()
             self.console_logger.debug("[*] Starting the shortcuts process...")
 
-        if self.ssl_config.cancel_inspect and os.path.isfile(self.ssl_config.cancel_inspect):
+        if self.ssl_config.cancel_inspect:
             self.cancel_inspect_proc = multiprocessing.Process(
                 target=cancel_inspect_process,
                 args=(
@@ -165,7 +164,7 @@ class ProxyServer:
             self.cancel_inspect_proc.start()
             self.console_logger.debug("[*] Starting the cancel inspection process...")
 
-        if not __slim__ and self.config_custom_header and os.path.isfile(self.config_custom_header):
+        if not __slim__ and self.config_custom_header:
             self.custom_header_proc = multiprocessing.Process(
                 target=custom_header_process,
                 args=(
@@ -191,20 +190,19 @@ class ProxyServer:
 
     def _load_authorized_ips(self):
         """
-        Load authorized IPs/subnets from the file.
+        Load authorized IPs/subnets from the config.
         """
         self.allowed_subnets = None
 
-        if self.authorized_ips and os.path.isfile(self.authorized_ips):
-            with open(self.authorized_ips, "r", encoding="utf-8") as f:
-                lines = [line.strip() for line in f if line.strip()]
+        if self.authorized_ips:
+            lines = self.authorized_ips
             try:
                 self.allowed_subnets = [ipaddress.ip_network(line, strict=False) for line in lines]
                 self.console_logger.debug(
                     "[*] Loaded %d authorized IPs/subnets", len(self.allowed_subnets)
                 )
             except ValueError as e:
-                self.console_logger.error("[*] Invalid IP/subnet in %s: %s", self.authorized_ips, e)
+                self.console_logger.error("[*] Invalid IP/subnet in config: %s", e)
                 self.allowed_subnets = None
 
     def _validate_ssl_inspection_files(self):
@@ -264,15 +262,6 @@ class ProxyServer:
             os.makedirs(self.ssl_config.inspect_certs_folder, exist_ok=True)
             self._validate_ssl_inspection_files()
             self._clean_inspection_folder()
-
-        if self.filter_config.filter_mode == "local":
-            for file in [
-                self.filter_config.blocked_sites,
-                self.filter_config.blocked_url,
-            ]:
-                if not os.path.exists(file):
-                    with open(file, "w", encoding="utf-8"):
-                        pass
 
         self._initialize_processes()
         self._load_authorized_ips()

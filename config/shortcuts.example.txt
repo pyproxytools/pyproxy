@@ -1,3 +1,0 @@
-f=https://facebook.com
-gh=https://github.com
-yt=https://youtube.com

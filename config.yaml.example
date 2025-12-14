@@ -1,0 +1,58 @@
+server:
+  host: 0.0.0.0
+  port: 8080
+
+logging:
+  debug: false
+  access_log: ./logs/access.log
+  block_log: ./logs/block.log
+  no_logging_access: false
+  no_logging_block: false
+  console_format: date=%(asctime)s level=%(levelname)s file=%(filename)s function=%(funcName)s message=%(message)s
+  access_log_format: date=%(asctime)s ip_src=%(ip_src)s url=%(url)s method=%(method)s domain=%(domain)s port=%(port)s protocol=%(protocol)s bytes_sent=%(bytes_sent)s bytes_received=%(bytes_received)s tls_version=%(tls_version)s
+  block_log_format: date=%(asctime)s ip_src=%(ip_src)s url=%(url)s method=%(method)s domain=%(domain)s port=%(port)s protocol=%(protocol)s
+  datefmt: '%Y-%m-%d %H:%M:%S'
+
+files:
+  html_403: assets/403.html
+
+filtering:
+  no_filter: false
+  filter_mode: local
+  blocked_sites:
+    - example.com
+  blocked_url:
+    - example2.com/about
+
+options:
+  shortcuts:
+    f: https://facebook.com
+    gh: https://github.com
+    yt: https://youtube.com
+  custom_header:
+    "https://example.com":
+      X-Custom-Header: HeaderValue
+      X-Another-Header: AnotherValue
+    "https://example2.com":
+      X-Different-Header: DifferentValue
+  authorized_ips:
+    - 0.0.0.0/0
+    - 127.0.0.1/8
+    - 10.0.0.1/32
+
+security:
+  ssl_inspect: false
+  inspect_ca_cert: certs/ca/cert.pem
+  inspect_ca_key: certs/ca/key.pem
+  inspect_certs_folder: certs/
+  cancel_inspect:
+    - mybank.com
+
+monitoring:
+  flask_port: 5000
+  flask_pass: password
+
+proxy:
+  proxy_enable: false
+  proxy_host: 127.0.0.1
+  proxy_port: 8081

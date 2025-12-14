@@ -12,9 +12,8 @@ services:
     #volumes:
       #- ./assets:/app/assets
       #- ./certs/ca:/app/certs/ca
-      #- ./config:/app/config
       #- ./logs:/app/logs
-      #- ./config.ini:/app/config.ini
+      #- ./config.yaml:/app/config.yaml
     environment:
       PYPROXY_HOST: 0.0.0.0
       PYPROXY_PORT: 8080

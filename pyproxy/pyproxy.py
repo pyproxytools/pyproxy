@@ -25,43 +25,39 @@ def main():
     config = load_config(args.config_file)
 
     main_config = ProxyConfigMain(
-        host=get_config_value(args, config, "host", "Server", "0.0.0.0"),  # noqa: S104
-        port=int(get_config_value(args, config, "port", "Server", 8080)),
-        debug=str_to_bool(get_config_value(args, config, "debug", "Logging", False)),
-        html_403=get_config_value(args, config, "html_403", "Files", "assets/403.html"),
-        shortcuts=get_config_value(args, config, "shortcuts", "Options", "config/shortcuts.txt"),
-        custom_header=get_config_value(
-            args, config, "custom_header", "Options", "config/custom_header.json"
-        ),
-        authorized_ips=get_config_value(
-            args, config, "authorized_ips", "Options", "config/authorized_ips.txt"
-        ),
+        host=get_config_value(args, config, "host", "server", "0.0.0.0"),  # noqa: S104
+        port=int(get_config_value(args, config, "port", "server", 8080)),
+        debug=str_to_bool(get_config_value(args, config, "debug", "logging", False)),
+        html_403=get_config_value(args, config, "html_403", "files", "assets/403.html"),
+        shortcuts=config.get("options", {}).get("shortcuts", {}),
+        custom_header=config.get("options", {}).get("custom_header", {}),
+        authorized_ips=config.get("options", {}).get("authorized_ips", []),
     )
 
     monitoring_config = ProxyConfigMonitoring(
-        flask_port=get_config_value(args, config, "flask_port", "Monitoring", 5000),
-        flask_pass=get_config_value(args, config, "flask_pass", "Monitoring", "password"),
+        flask_port=get_config_value(args, config, "flask_port", "monitoring", 5000),
+        flask_pass=get_config_value(args, config, "flask_pass", "monitoring", "password"),
     )
 
     proxy_config = ProxyConfigProxy(
-        enable=str_to_bool(get_config_value(args, config, "proxy_enable", "Proxy", False)),
-        host=get_config_value(args, config, "proxy_host", "Proxy", "127.0.0.1"),
-        port=get_config_value(args, config, "proxy_port", "Proxy", 8081),
+        enable=str_to_bool(get_config_value(args, config, "proxy_enable", "proxy", False)),
+        host=get_config_value(args, config, "proxy_host", "proxy", "127.0.0.1"),
+        port=get_config_value(args, config, "proxy_port", "proxy", 8081),
     )
 
-    console_format = config.get("Logging", "console_format", fallback=None)
-    access_log_format = config.get("Logging", "access_log_format", fallback=None)
-    block_log_format = config.get("Logging", "block_log_format", fallback=None)
-    datefmt = config.get("Logging", "datefmt", fallback=None)
+    console_format = config.get("logging", {}).get("console_format")
+    access_log_format = config.get("logging", {}).get("access_log_format")
+    block_log_format = config.get("logging", {}).get("block_log_format")
+    datefmt = config.get("logging", {}).get("datefmt")
 
     logger_config = ProxyConfigLogger(
-        access_log=get_config_value(args, config, "access_log", "Logging", "logs/access.log"),
-        block_log=get_config_value(args, config, "block_log", "Logging", "logs/block.log"),
+        access_log=get_config_value(args, config, "access_log", "logging", "logs/access.log"),
+        block_log=get_config_value(args, config, "block_log", "logging", "logs/block.log"),
         no_logging_access=str_to_bool(
-            get_config_value(args, config, "no_logging_access", "Logging", False)
+            get_config_value(args, config, "no_logging_access", "logging", False)
         ),
         no_logging_block=str_to_bool(
-            get_config_value(args, config, "no_logging_block", "Logging", False)
+            get_config_value(args, config, "no_logging_block", "logging", False)
         ),
         console_format=(
             console_format
@@ -107,30 +103,24 @@ def main():
     )
 
     filter_config = ProxyConfigFilter(
-        no_filter=str_to_bool(get_config_value(args, config, "no_filter", "Filtering", False)),
-        filter_mode=get_config_value(args, config, "filter_mode", "Filtering", "local"),
-        blocked_sites=get_config_value(
-            args, config, "blocked_sites", "Filtering", "config/blocked_sites.txt"
-        ),
-        blocked_url=get_config_value(
-            args, config, "blocked_url", "Filtering", "config/blocked_url.txt"
-        ),
+        no_filter=str_to_bool(get_config_value(args, config, "no_filter", "filtering", False)),
+        filter_mode=get_config_value(args, config, "filter_mode", "filtering", "local"),
+        blocked_sites=config.get("filtering", {}).get("blocked_sites", []),
+        blocked_url=config.get("filtering", {}).get("blocked_url", []),
     )
 
     ssl_config = ProxyConfigSSL(
-        ssl_inspect=str_to_bool(get_config_value(args, config, "ssl_inspect", "Security", False)),
+        ssl_inspect=str_to_bool(get_config_value(args, config, "ssl_inspect", "security", False)),
         inspect_ca_cert=get_config_value(
-            args, config, "inspect_ca_cert", "Security", "certs/ca/cert.pem"
+            args, config, "inspect_ca_cert", "security", "certs/ca/cert.pem"
         ),
         inspect_ca_key=get_config_value(
-            args, config, "inspect_ca_key", "Security", "certs/ca/key.pem"
+            args, config, "inspect_ca_key", "security", "certs/ca/key.pem"
         ),
         inspect_certs_folder=get_config_value(
-            args, config, "inspect_certs_folder", "Security", "certs/"
+            args, config, "inspect_certs_folder", "security", "certs/"
         ),
-        cancel_inspect=get_config_value(
-            args, config, "cancel_inspect", "Security", "config/cancel_inspect.txt"
-        ),
+        cancel_inspect=config.get("security", {}).get("cancel_inspect", []),
     )
 
     proxy = ProxyServer(

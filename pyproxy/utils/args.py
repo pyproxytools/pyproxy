@@ -4,11 +4,11 @@ pyproxy.utils.args.py
 This module allows you to read the program configuration file and return the values.
 """
 
-import configparser
 import argparse
 import os
 from rich_argparse import MetavarTypeRichHelpFormatter
 from pyproxy import __version__
+import yaml
 
 
 def parse_args() -> argparse.Namespace:
@@ -35,8 +35,8 @@ def parse_args() -> argparse.Namespace:
         "-f",
         "--config-file",
         type=str,
-        default="./config.ini",
-        help="Path to config.ini file",
+        default="./config.yaml",
+        help="Path to config.yaml file",
     )  # noqa: E501
     parser.add_argument("--access-log", type=str, help="Path to the access log file")
     parser.add_argument("--block-log", type=str, help="Path to the block log file")
@@ -94,24 +94,24 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def load_config(config_path: str) -> configparser.ConfigParser:
+def load_config(config_path: str) -> dict:
     """
-    Loads the configuration file and returns the parsed config object.
+    Loads the configuration file and returns the parsed config dict.
 
     Args:
         config_path (str): The path to the configuration file to load.
 
     Returns:
-        configparser.ConfigParser: The parsed configuration object.
+        dict: The parsed configuration dict.
     """
-    config = configparser.ConfigParser(interpolation=None)
-    config.read(config_path)
+    with open(config_path, "r") as f:
+        config = yaml.safe_load(f)
     return config
 
 
 def get_config_value(
     args: argparse.Namespace,
-    config: configparser.ConfigParser,
+    config: dict,
     arg_name: str,
     section: str,
     fallback_value: str,
@@ -122,9 +122,9 @@ def get_config_value(
 
     Args:
         args (argparse.Namespace): The parsed command-line arguments object.
-        config (configparser.ConfigParser): The parsed configuration object.
+        config (dict): The parsed configuration dict.
         arg_name (str): The name of the command-line argument.
-        section (str): The section in the config file where the value is located.
+        section (str): The section in the config dict where the value is located.
         fallback_value (str): The fallback value to return if neither
                         argument nor config has a value.
 
@@ -140,7 +140,10 @@ def get_config_value(
     if env_value:
         return env_value
 
-    return config.get(section, arg_name, fallback=fallback_value)
+    try:
+        return config[section][arg_name]
+    except KeyError:
+        return fallback_value
 
 
 def str_to_bool(value: str) -> bool:

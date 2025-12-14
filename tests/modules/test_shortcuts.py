@@ -23,8 +23,7 @@ Test Cases:
 
 import unittest
 import multiprocessing
-from unittest.mock import patch, mock_open
-from pyproxy.modules.shortcuts import load_shortcuts, shortcuts_process
+from pyproxy.modules.shortcuts import shortcuts_process
 
 
 class TestShortcuts(unittest.TestCase):
@@ -44,42 +43,23 @@ class TestShortcuts(unittest.TestCase):
         while not self.result_queue.empty():
             self.result_queue.get_nowait()
 
-    def test_load_shortcuts(self):
-        """Tests if the shortcuts are correctly loaded from the file."""
-        with patch(
-            "builtins.open",
-            new_callable=mock_open,
-            read_data="alias1=http://example.com\nalias2=http://test.com",
-        ):
-            shortcuts = load_shortcuts("shortcuts.txt")
-            self.assertEqual(shortcuts["alias1"], "http://example.com")
-            self.assertEqual(shortcuts["alias2"], "http://test.com")
-            self.assertIsInstance(shortcuts, dict)
-
-    @patch("builtins.open", side_effect=FileNotFoundError("File not found"))
-    def test_load_shortcuts_file_not_found(self, _mock_file):
-        """Tests that a FileNotFoundError is raised when the shortcuts file is missing."""
-        with self.assertRaises(FileNotFoundError):
-            load_shortcuts("invalid_file.txt")
-
-    def _test_shortcuts_process_helper(
-        self, alias, expected_url, patch_data="alias1=http://example.com"
-    ):
+    def _test_shortcuts_process_helper(self, alias, expected_url, shortcuts_dict=None):
         """Helper method to test shortcuts_process with different alias requests."""
-        with patch("builtins.open", new_callable=mock_open, read_data=patch_data):
-            process = multiprocessing.Process(
-                target=shortcuts_process,
-                args=(self.queue, self.result_queue, "shortcuts.txt"),
-            )
-            process.start()
+        if shortcuts_dict is None:
+            shortcuts_dict = {"alias1": "http://example.com"}
+        process = multiprocessing.Process(
+            target=shortcuts_process,
+            args=(self.queue, self.result_queue, shortcuts_dict),
+        )
+        process.start()
 
-            self.queue.put(alias)
+        self.queue.put(alias)
 
-            result = self.result_queue.get(timeout=2)
-            self.assertEqual(result, expected_url)
+        result = self.result_queue.get(timeout=2)
+        self.assertEqual(result, expected_url)
 
-            process.terminate()
-            process.join()
+        process.terminate()
+        process.join()
 
     def test_shortcuts_process(self):
         """Tests if alias requests are correctly resolved to URLs."""
@@ -91,28 +71,24 @@ class TestShortcuts(unittest.TestCase):
 
     def test_shortcuts_process_with_multiple_aliases(self):
         """Tests if multiple alias requests are correctly resolved."""
-        with patch(
-            "builtins.open",
-            new_callable=mock_open,
-            read_data="alias1=http://example.com\nalias2=http://test.com",
-        ):
-            process = multiprocessing.Process(
-                target=shortcuts_process,
-                args=(self.queue, self.result_queue, "shortcuts.txt"),
-            )
-            process.start()
+        shortcuts_dict = {"alias1": "http://example.com", "alias2": "http://test.com"}
+        process = multiprocessing.Process(
+            target=shortcuts_process,
+            args=(self.queue, self.result_queue, shortcuts_dict),
+        )
+        process.start()
 
-            self.queue.put("alias1")
-            self.queue.put("alias2")
+        self.queue.put("alias1")
+        self.queue.put("alias2")
 
-            result1 = self.result_queue.get(timeout=2)
-            result2 = self.result_queue.get(timeout=2)
+        result1 = self.result_queue.get(timeout=2)
+        result2 = self.result_queue.get(timeout=2)
 
-            self.assertEqual(result1, "http://example.com")
-            self.assertEqual(result2, "http://test.com")
+        self.assertEqual(result1, "http://example.com")
+        self.assertEqual(result2, "http://test.com")
 
-            process.terminate()
-            process.join()
+        process.terminate()
+        process.join()
 
 
 if __name__ == "__main__":

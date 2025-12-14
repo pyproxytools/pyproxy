@@ -1,9 +1,0 @@
-{
-    "https://example.com": {
-      "X-Custom-Header": "HeaderValue",
-      "X-Another-Header": "AnotherValue"
-    },
-    "https://example2.com": {
-      "X-Different-Header": "DifferentValue"
-    }
-  }

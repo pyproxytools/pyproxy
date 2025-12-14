@@ -6,3 +6,4 @@ Flask-HTTPAuth>=4.8.0
 Flask-Babel>=4.0.0
 psutil>=7.1.0
 colorlog>=6.9.0
+PyYAML>=6.0.3

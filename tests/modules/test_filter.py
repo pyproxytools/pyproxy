@@ -22,7 +22,7 @@ Test Cases:
 
 import unittest
 import multiprocessing
-from unittest.mock import patch, mock_open
+from unittest.mock import patch
 import requests
 from pyproxy.modules.filter import load_blacklist, filter_process
 
@@ -45,25 +45,12 @@ class TestFilter(unittest.TestCase):
             self.result_queue.get_nowait()
 
     def test_load_blacklist(self):
-        """Tests if the blacklist is correctly loaded from the file."""
-        with patch(
-            "builtins.open",
-            new_callable=mock_open,
-            read_data="blocked.com\nallowed.com/blocked",
-        ):
-            blocked_sites, blocked_urls = load_blacklist(
-                "blocked_sites.txt", "blocked_urls.txt", "local"
-            )
-            self.assertIn("blocked.com", blocked_sites)
-            self.assertIn("allowed.com/blocked", blocked_sites)
-            self.assertIsInstance(blocked_sites, set)
-            self.assertIsInstance(blocked_urls, set)
-
-    @patch("builtins.open", side_effect=FileNotFoundError("File not found"))
-    def test_load_blacklist_file_not_found(self, _mock_file):
-        """Tests that a FileNotFoundError is raised when the blacklist file is missing."""
-        with self.assertRaises(FileNotFoundError):
-            load_blacklist("invalid_file.txt", "blocked_urls.txt", "local")
+        """Tests if the blacklist is correctly loaded from the lists."""
+        blocked_sites, blocked_urls = load_blacklist(["blocked.com", "allowed.com/blocked"], [])
+        self.assertIn("blocked.com", blocked_sites)
+        self.assertIn("allowed.com/blocked", blocked_sites)
+        self.assertIsInstance(blocked_sites, set)
+        self.assertIsInstance(blocked_urls, set)
 
     @patch(
         "requests.get",
@@ -71,17 +58,12 @@ class TestFilter(unittest.TestCase):
     )
     def test_load_blacklist_http_error(self, _mock_request):
         """Tests that an HTTP error is handled correctly when loading blacklists."""
-        with self.assertRaises(requests.exceptions.RequestException):
-            load_blacklist(
-                "http://example.com/blocked_sites",
-                "http://example.com/blocked_urls",
-                "http",
-            )
+        # Since we removed http mode, this test is obsolete
+        pass
 
-    @patch("builtins.open", new_callable=mock_open, read_data="")
-    def test_load_blacklist_empty_file(self, _mock_file):
-        """Tests that an empty file returns empty sets for blocked sites and URLs."""
-        blocked_sites, blocked_urls = load_blacklist("empty_sites.txt", "empty_urls.txt", "local")
+    def test_load_blacklist_empty(self):
+        """Tests that empty lists return empty sets for blocked sites and URLs."""
+        blocked_sites, blocked_urls = load_blacklist([], [])
         self.assertEqual(len(blocked_sites), 0)
         self.assertEqual(len(blocked_urls), 0)
 
@@ -89,32 +71,35 @@ class TestFilter(unittest.TestCase):
         self,
         input_urls,
         expected_results,
-        patch_data="blocked.com\nallowed.com/blocked",
+        blocked_sites=None,
+        blocked_urls=None,
     ):
         """Helper method to test filter_process with different inputs."""
-        with patch("builtins.open", new_callable=mock_open, read_data=patch_data):
-            process = multiprocessing.Process(
-                target=filter_process,
-                args=(
-                    self.queue,
-                    self.result_queue,
-                    "local",
-                    "blocked_sites.txt",
-                    "blocked_urls.txt",
-                ),
-            )
-            process.start()
+        if blocked_sites is None:
+            blocked_sites = ["blocked.com", "allowed.com/blocked"]
+        if blocked_urls is None:
+            blocked_urls = []
+        process = multiprocessing.Process(
+            target=filter_process,
+            args=(
+                self.queue,
+                self.result_queue,
+                blocked_sites,
+                blocked_urls,
+            ),
+        )
+        process.start()
 
-            for url in input_urls:
-                self.queue.put(url)
+        for url in input_urls:
+            self.queue.put(url)
 
-            results = []
-            for _ in expected_results:
-                results.append(self.result_queue.get(timeout=2))
+        results = []
+        for _ in expected_results:
+            results.append(self.result_queue.get(timeout=2))
 
-            self.assertEqual(results, expected_results)
-            process.terminate()
-            process.join()
+        self.assertEqual(results, expected_results)
+        process.terminate()
+        process.join()
 
     def test_filter_process(self):
         """Tests if domains/URLs are correctly identified as blocked or allowed."""
@@ -154,14 +139,16 @@ class TestFilter(unittest.TestCase):
         """
         input_urls = ["http://sub.blocked.com/"]
         expected_results = [("sub.blocked.com", "Allowed")]
-        self._test_filter_process_helper(input_urls, expected_results, patch_data="blocked.com\n")
+        self._test_filter_process_helper(
+            input_urls, expected_results, blocked_sites=["blocked.com"]
+        )
 
     def test_filter_process_special_characters(self):
         """Tests if URLs with special characters are correctly handled."""
         input_urls = ["http://weird-site.com/"]
         expected_results = [("weird-site.com", "Blocked")]
         self._test_filter_process_helper(
-            input_urls, expected_results, patch_data="weird-site.com\n"
+            input_urls, expected_results, blocked_sites=["weird-site.com"]
         )
 
     def test_filter_process_with_path_and_port(self):

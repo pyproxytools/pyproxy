@@ -17,9 +17,9 @@ class ProxyConfigMain:
     port: int
     debug: bool
     html_403: str
-    shortcuts: str
-    custom_header: str
-    authorized_ips: str
+    shortcuts: dict[str, str]
+    custom_header: dict[str, dict[str, str]]
+    authorized_ips: list[str]
 
     def to_dict(self):
         return asdict(self)
@@ -79,8 +79,8 @@ class ProxyConfigFilter:
 
     no_filter: bool
     filter_mode: str
-    blocked_sites: str
-    blocked_url: str
+    blocked_sites: list[str]
+    blocked_url: list[str]
 
     def to_dict(self):
         return asdict(self)
@@ -96,7 +96,7 @@ class ProxyConfigSSL:
     inspect_ca_cert: str
     inspect_ca_key: str
     inspect_certs_folder: str
-    cancel_inspect: str
+    cancel_inspect: list[str]
 
     def to_dict(self):
         return asdict(self)
