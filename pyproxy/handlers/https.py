@@ -6,9 +6,9 @@ generates certificates dynamically, and logs access and blocked attempts. It can
 relay raw data when SSL inspection is disabled.
 """
 
-import socket
-import select
 import os
+import select
+import socket
 import ssl
 import threading
 
@@ -377,7 +377,12 @@ class HttpsHandler:
             and "target_ip" not in self.active_connections[thread_id]
         ):
             try:
-                target_ip, target_port = server_socket.getpeername()
+                peer = server_socket.getpeername()
+                if len(peer) == 2:
+                    target_ip, target_port = server_socket.getpeername()
+                else:
+                    target_ip, target_port, *_ = server_socket.getpeername()
+
                 self.active_connections[thread_id]["target_ip"] = target_ip
                 self.active_connections[thread_id]["target_port"] = target_port
             except OSError as e:
