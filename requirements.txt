@@ -4,5 +4,5 @@ requests>=2.33.1
 Flask>=3.1.2
 Flask-HTTPAuth>=4.8.1
 Flask-Babel>=4.0.0
-psutil>=7.1.0
+psutil>=7.2.2
 colorlog>=6.10.1
