@@ -377,7 +377,12 @@ class HttpsHandler:
             and "target_ip" not in self.active_connections[thread_id]
         ):
             try:
-                target_ip, target_port = server_socket.getpeername()
+                peer = server_socket.getpeername()
+                if len(peer) == 2:
+                    target_ip, target_port = peer
+                else:
+                    target_ip, target_port, *_ = peer
+
                 self.active_connections[thread_id]["target_ip"] = target_ip
                 self.active_connections[thread_id]["target_port"] = target_port
             except OSError as e:
