@@ -383,7 +383,6 @@ class HttpsHandler:
                 else:
                     target_ip, target_port, *_ = peer
 
-                target_ip, target_port = server_socket.getpeername()
                 self.active_connections[thread_id]["target_ip"] = target_ip
                 self.active_connections[thread_id]["target_port"] = target_port
             except OSError as e:
