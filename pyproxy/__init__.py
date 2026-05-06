@@ -5,7 +5,7 @@ that holds the current version number of the application.
 
 import os
 
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 
 if os.path.isdir("pyproxy/monitoring"):
     __slim__ = False
